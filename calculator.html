@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fee Calculator | ERNIE-KESS ENTERPRISE</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+
+  <header>
+    <h1>Fee Calculator</h1>
+    <p>See the charge before you order</p>
+  </header>
+
+  <section>
+    <label>Service</label>
+    <select id="service">
+      <option value="send">Send Money</option>
+      <option value="cash">Cash In / Cash Out</option>
+      <option value="airtime">Airtime</option>
+      <option value="data">Data Bundle</option>
+      <option value="mashup">Mashup</option>
+      <option value="bill">Bill Payment</option>
+    </select>
+
+    <label>Amount (GH₵)</label>
+    <input type="number" id="amount" min="1" step="0.5">
+
+    <p class="total">Charge: <span id="fee">GH₵ 0.00</span></p>
+    <p class="total">Total: <span id="total">GH₵ 0.00</span></p>
+
+    <a class="btn" id="orderBtn" href="#" target="_blank">Order on WhatsApp</a>
+  </section>
+
+  <script src="calculator.js"></script>
+</body>
+</html>

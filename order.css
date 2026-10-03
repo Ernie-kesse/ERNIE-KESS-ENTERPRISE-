@@ -1,0 +1,86 @@
+form label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+form input,
+form select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.total {
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+form .btn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.warn {
+  margin-top: 16px;
+  color: #e53935;
+  font-size: 0.9rem;
+}
+
+.payBox {
+  margin-top: 16px;
+  padding: 14px;
+  background: var(--light);
+  border-left: 5px solid var(--gold);
+  border-radius: 8px;
+}
+
+.payNumber {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+.orderCard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.orderCard button {
+  margin: 6px 6px 0 0;
+  padding: 8px 12px;
+}
+
+.status {
+  font-weight: bold;
+  color: #e53935;
+}
+.notice {
+  background: var(--light);
+  border-left: 5px solid var(--gold);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.notice h3 {
+  margin-bottom: 6px;
+}
+
+.notice ul {
+  padding-left: 20px;
+}
+input[readonly] {
+  background: #eee;
+}
+
+.copyBtn {
+  margin: 4px 0 12px;
+  width: auto;
+  padding: 8px 14px;
+}
