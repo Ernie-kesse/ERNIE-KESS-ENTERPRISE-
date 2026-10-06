@@ -208,3 +208,13 @@ document.getElementById("copyBtn").addEventListener("click", function () {
 });
 
 fillNetworks();
+// Preselect the service from the link, e.g. order.html?service=data
+const params = new URLSearchParams(window.location.search);
+const wanted = params.get("service");
+
+if (wanted && NETWORKS[wanted]) {
+  serviceInput.value = wanted;
+  fillNetworks();
+  refreshBundleUI();
+  updateTotals();
+}

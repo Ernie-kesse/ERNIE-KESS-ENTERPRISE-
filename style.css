@@ -4,7 +4,7 @@
   --main-dark: #124d2a;  /* darker green for text on gold */
   --gold: #d4af37;       /* gold accent */
   --light: #fbf4d9;      /* light gold tint */
-  --cream: #fafaf5;      /* page and header background */
+  --cream: #fafaf5;      /* page background */
   --button: #1a6b3a;     /* main buttons */
   --whatsapp: #25d366;   /* floating WhatsApp button */
   --alert: #e53935;      /* fraud warning stripe */
@@ -17,18 +17,32 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', Arial, sans-serif;
   background: var(--cream);
   color: #222;
   line-height: 1.6;
 }
 
+/* ===== Faded logo behind the whole page ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("logo.jpg") center / 90% no-repeat;
+  opacity: 0.08;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ===== Header (green) ===== */
 header {
-  background: var(--cream);
-  color: var(--main);
+  background: linear-gradient(180deg, var(--main) 0%, var(--main-dark) 100%);
+  color: white;
   text-align: center;
   padding: 24px 20px 28px;
   border-bottom: 6px solid var(--gold);
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 header h1 {
@@ -36,13 +50,14 @@ header h1 {
   margin-bottom: 8px;
 }
 
+header p {
+  color: white;
+  font-weight: bold;
+}
+
 .brandTitle {
   position: absolute;
   left: -9999px;
-}
-
-header p {
-  font-weight: bold;
 }
 
 .logo {
@@ -51,14 +66,41 @@ header p {
   height: auto;
   display: block;
   margin: 0 auto 10px;
+  background: var(--cream);
+  padding: 12px;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
+/* Badges under the tagline */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 12px 0 4px;
+}
+
+.chips span {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--gold);
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* ===== Sections (cards) ===== */
 section {
   background: rgba(255, 255, 255, 0.9);
   max-width: 600px;
-  margin: 16px auto;
-  padding: 20px;
-  border-radius: 10px;
+  width: calc(100% - 32px);
+  margin: 18px auto;
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  animation: fadeUp 0.6s ease both;
 }
 
 section p {
@@ -70,6 +112,79 @@ h2 {
   margin-bottom: 12px;
 }
 
+h2::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 4px;
+  margin-top: 6px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-block;
+  background: var(--button);
+  color: white;
+  text-decoration: none;
+  padding: 13px 24px;
+  border-radius: 30px;
+  font-weight: bold;
+  margin-top: 12px;
+  box-shadow: 0 3px 8px rgba(26, 107, 58, 0.3);
+}
+
+.btn.alt {
+  background: var(--gold);
+  color: var(--main-dark);
+  margin-left: 6px;
+  box-shadow: 0 3px 8px rgba(212, 175, 55, 0.4);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Buttons in the header: gold, so they stand out on the green */
+header .btn {
+  background: var(--gold);
+  color: var(--main-dark);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Service tiles ===== */
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.tile {
+  background: var(--light);
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 18px 8px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--main);
+  font-weight: bold;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.tile .icon {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.tile:active {
+  background: var(--gold);
+  color: var(--main-dark);
+}
+
+/* ===== Lists ===== */
 .services {
   list-style: none;
   margin-bottom: 16px;
@@ -81,23 +196,6 @@ h2 {
   padding: 10px;
   margin-bottom: 8px;
   border-radius: 6px;
-}
-
-.btn {
-  display: inline-block;
-  background: var(--button);
-  color: white;
-  text-decoration: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: bold;
-  margin-top: 12px;
-}
-
-.btn.alt {
-  background: var(--gold);
-  color: var(--main-dark);
-  margin-left: 6px;
 }
 
 .steps {
@@ -121,6 +219,7 @@ h2 {
   border-bottom: none;
 }
 
+/* ===== Fraud warning ===== */
 .safety {
   border-left: 5px solid var(--alert);
 }
@@ -129,6 +228,31 @@ h2 {
   padding-left: 20px;
 }
 
+/* ===== FAQ ===== */
+details {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+summary {
+  font-weight: bold;
+  color: var(--main);
+  cursor: pointer;
+}
+
+details p {
+  margin: 8px 0 0;
+}
+
+/* ===== Form fields (order page) ===== */
+form input:focus,
+form select:focus {
+  outline: none;
+  border-color: var(--main);
+  box-shadow: 0 0 0 3px rgba(26, 107, 58, 0.15);
+}
+
+/* ===== Floating WhatsApp button and footer ===== */
 .floatWa {
   position: fixed;
   right: 16px;
@@ -148,13 +272,96 @@ footer {
   font-size: 0.9rem;
   color: var(--main);
 }
-/* Faded logo behind the whole page */
-body::before {
-  content: "";
+/* ===== Splash screen (welcome) ===== */
+#splash {
   position: fixed;
   inset: 0;
-  background: url("logo.jpg") center / 90% no-repeat;
-  opacity: 0.08;
-  z-index: -1;
-  pointer-events: none;
+  z-index: 100;
+  background:
+    linear-gradient(rgba(18, 77, 42, 0.82), rgba(18, 77, 42, 0.82)),
+    url("building.jpg") center / cover no-repeat,
+    var(--main-dark);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  animation: splashOut 0.6s ease 4.8s forwards;
+}
+
+#splash.hide {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+
+.welcomeText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.w1 {
+  font-size: 1.6rem;
+  opacity: 0;
+  animation: appear 0.9s ease 0.4s forwards;
+}
+
+.w2 {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 1px;
+  color: var(--gold);
+  opacity: 0;
+  transform: translateY(24px);
+  animation: join 1s ease 1.8s forwards;
+}
+
+.tag {
+  margin: 16px 0 0;
+  opacity: 0;
+  animation: appear 0.8s ease 3s forwards;
+}
+
+.loadBar {
+  width: 70%;
+  max-width: 300px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  margin-top: 28px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.loadBar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--gold);
+  animation: fill 4.4s linear forwards;
+}
+
+@keyframes appear {
+  to { opacity: 1; }
+}
+
+@keyframes join {
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes fill {
+  to { width: 100%; }
+}
+@keyframes splashOut {
+  to { opacity: 0; visibility: hidden; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
 }
