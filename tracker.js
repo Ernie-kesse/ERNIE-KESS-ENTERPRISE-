@@ -1,5 +1,6 @@
 const KEY = "ernieKessOrders";
 const STATUSES = ["Waiting for payment", "Paid", "Delivered"];
+const LATE_MINUTES = 10; // paid orders waiting longer than this turn red
 
 // Load saved orders from this phone's browser
 function load() {
@@ -18,6 +19,11 @@ function save() {
 }
 
 let orders = load();
+
+// Whole minutes between two timestamps
+function minutes(from, to) {
+  return Math.max(0, Math.round((to - from) / 60000));
+}
 
 function render() {
   const list = document.getElementById("list");
@@ -40,11 +46,27 @@ function render() {
     card.appendChild(info);
     card.appendChild(status);
 
+    // Timing line
+    const timing = document.createElement("p");
+    if (order.status === "Paid" && order.paidAt) {
+      const waited = minutes(order.paidAt, Date.now());
+      timing.textContent = "Paid " + waited + " min ago - deliver now!";
+      if (waited >= LATE_MINUTES) timing.className = "late";
+      card.appendChild(timing);
+    } else if (order.status === "Delivered" && order.paidAt && order.deliveredAt) {
+      timing.textContent =
+        "Delivered " + minutes(order.paidAt, order.deliveredAt) + " min after payment";
+      card.appendChild(timing);
+    }
+
     if (order.status !== "Delivered") {
       const next = document.createElement("button");
-      next.textContent = "Mark as " + STATUSES[STATUSES.indexOf(order.status) + 1];
+      const nextStatus = STATUSES[STATUSES.indexOf(order.status) + 1];
+      next.textContent = "Mark as " + nextStatus;
       next.onclick = function () {
-        order.status = STATUSES[STATUSES.indexOf(order.status) + 1];
+        order.status = nextStatus;
+        if (nextStatus === "Paid") order.paidAt = Date.now();
+        if (nextStatus === "Delivered") order.deliveredAt = Date.now();
         save();
         render();
       };
@@ -75,9 +97,20 @@ function updateSummary() {
   const waiting = todays.filter(function (o) { return o.status === "Waiting for payment"; });
   const money = delivered.reduce(function (sum, o) { return sum + o.total; }, 0);
 
+  // Average minutes from payment to delivery (only orders with both times)
+  const timed = delivered.filter(function (o) { return o.paidAt && o.deliveredAt; });
+  let avg = "-";
+  if (timed.length > 0) {
+    const total = timed.reduce(function (sum, o) {
+      return sum + minutes(o.paidAt, o.deliveredAt);
+    }, 0);
+    avg = (total / timed.length).toFixed(1) + " min";
+  }
+
   document.getElementById("summary").textContent =
     todays.length + " orders | " + delivered.length + " delivered (GH₵" +
-    money.toFixed(2) + ") | " + waiting.length + " waiting for payment";
+    money.toFixed(2) + ") | " + waiting.length + " waiting for payment | " +
+    "average delivery: " + avg;
 }
 
 document.getElementById("trackForm").addEventListener("submit", function (e) {

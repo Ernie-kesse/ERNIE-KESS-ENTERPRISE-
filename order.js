@@ -3,9 +3,9 @@ const PAY_NUMBER = "0257285582";
 
 // Percentage charges
 const RATES = {
-  airtime: 0.10,
-  data: 0.10,
-  mashup: 0.10,
+  airtime: 0,
+  data: 0,
+  mashup: 0.1,
   bill: 0.012
 };
 
