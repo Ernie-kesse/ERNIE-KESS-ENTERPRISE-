@@ -1,0 +1,363 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buy Data Bundles | ERNIE-KESS ENTERPRISE</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8f5e9;
+            color: #183c2b;
+        }
+
+        header {
+            background: #123c2a;
+            color: #f5d77a;
+            text-align: center;
+            padding: 24px 15px;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+        }
+
+        header p {
+            margin: 0;
+            color: #ffffff;
+        }
+
+        main {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .notice {
+            background: #fff3cd;
+            border: 1px solid #e6c96a;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #654d00;
+        }
+
+        #status {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .bundles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+        }
+
+        .bundle-card {
+            background: #ffffff;
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid #e2dfd2;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .bundle-card h2 {
+            margin-top: 0;
+            color: #17643e;
+        }
+
+        .price {
+            font-size: 25px;
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        .bundle-card button,
+        .back-button {
+            display: inline-block;
+            background: #17643e;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .bundle-card button:hover,
+        .back-button:hover {
+            background: #10472b;
+        }
+
+        .order-form {
+            margin-top: 30px;
+            background: #ffffff;
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid #e2dfd2;
+        }
+
+        .order-form h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        #selectedBundle {
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        #orderMessage {
+            margin-top: 15px;
+            overflow-wrap: anywhere;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>ERNIE-KESS ENTERPRISE</h1>
+        <p>Data Bundles — Simple, Convenient Service</p>
+    </header>
+
+    <main>
+
+        <div class="notice">
+            <strong>Test page:</strong>
+            These are sample bundles for development only.
+            No payment will be collected, and no data will be delivered.
+        </div>
+
+        <h2>Available Data Bundles</h2>
+
+        <p id="status" role="status">Loading bundles...</p>
+
+        <section id="bundles" class="bundles">
+            <!-- Bundle cards will appear here. -->
+        </section>
+
+        <section class="order-form" id="orderForm">
+            <h2>Request a Bundle</h2>
+
+            <p id="selectedBundle">
+                Please select a bundle above.
+            </p>
+
+            <form id="bundleOrderForm">
+
+                <label for="phone">Customer phone number</label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="e.g. 0241234567"
+                    autocomplete="tel"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="back-button"
+                    style="margin-top: 18px;"
+                    id="submitButton"
+                    disabled
+                >
+                    Submit Test Request
+                </button>
+
+            </form>
+
+            <p id="orderMessage" role="status" aria-live="polite"></p>
+        </section>
+
+        <p style="margin-top: 25px;">
+            <a href="index.html" class="back-button">
+                Back to Homepage
+            </a>
+        </p>
+
+    </main>
+
+    <footer>
+        &copy; 2026 ERNIE-KESS ENTERPRISE. All rights reserved.
+    </footer>
+
+    <script>
+        const API_URL = "https://ernie-kess-api.onrender.com";
+
+        const bundlesContainer = document.getElementById("bundles");
+        const statusMessage = document.getElementById("status");
+        const selectedBundleMessage =
+            document.getElementById("selectedBundle");
+        const orderMessage = document.getElementById("orderMessage");
+        const submitButton = document.getElementById("submitButton");
+
+        let selectedBundle = null;
+
+        async function loadBundles() {
+            try {
+                const response = await fetch(`${API_URL}/api/bundles`);
+
+                if (!response.ok) {
+                    throw new Error("The server could not load the bundles.");
+                }
+
+                const data = await response.json();
+
+                // Support either a plain array or an object containing bundles.
+                const bundles = Array.isArray(data)
+                    ? data
+                    : data.bundles;
+
+                if (!Array.isArray(bundles) || bundles.length === 0) {
+                    throw new Error("No bundles are currently available.");
+                }
+
+                bundlesContainer.replaceChildren();
+
+                bundles.forEach((bundle) => {
+                    const card = document.createElement("article");
+                    card.className = "bundle-card";
+
+                    const title = document.createElement("h2");
+                    title.textContent =
+                        `${bundle.data ?? bundle.size ?? bundle.name ?? "Data Bundle"}`;
+
+                    const price = document.createElement("p");
+                    price.className = "price";
+
+                    const amount = Number(bundle.price);
+
+                    price.textContent = Number.isFinite(amount)
+                        ? `GH₵${amount.toFixed(2)}`
+                        : "Price unavailable";
+
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.textContent = "Select Bundle";
+
+                    button.addEventListener("click", () => {
+                        selectedBundle = bundle;
+
+                        selectedBundleMessage.textContent =
+                            `Selected: ${title.textContent} — ${price.textContent}`;
+
+                        submitButton.disabled = false;
+                        orderMessage.textContent = "";
+
+                        document.getElementById("orderForm")
+                            .scrollIntoView({ behavior: "smooth" });
+                    });
+
+                    card.append(title, price, button);
+                    bundlesContainer.appendChild(card);
+                });
+
+                statusMessage.textContent = "Bundles loaded successfully.";
+
+            } catch (error) {
+                statusMessage.textContent =
+                    "Could not load bundles. Please refresh and try again.";
+
+                console.error("Bundle loading error:", error);
+            }
+        }
+
+        document.getElementById("bundleOrderForm")
+            .addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                if (!selectedBundle) {
+                    orderMessage.textContent =
+                        "Please select a bundle first.";
+                    return;
+                }
+
+                const phone = document.getElementById("phone")
+                    .value.trim();
+
+                if (!/^(0\d{9}|\+233\d{9})$/.test(phone)) {
+                    orderMessage.textContent =
+                        "Enter a valid Ghanaian phone number.";
+                    return;
+                }
+
+                submitButton.disabled = true;
+                orderMessage.textContent = "Submitting test request...";
+
+                try {
+                    const response = await fetch(`${API_URL}/api/orders`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            phone: phone,
+                            bundle_id: selectedBundle.id
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(
+                            result.error || "The request could not be submitted."
+                        );
+                    }
+
+                    orderMessage.textContent =
+                        "Test request submitted. No payment was taken and no data was delivered.";
+
+                    document.getElementById("bundleOrderForm").reset();
+
+                    selectedBundle = null;
+
+                    selectedBundleMessage.textContent =
+                        "Please select a bundle above.";
+
+                } catch (error) {
+                    orderMessage.textContent =
+                        `Request failed: ${error.message}`;
+                } finally {
+                    submitButton.disabled = !selectedBundle;
+                }
+            });
+
+        loadBundles();
+    </script>
+
+</body>
+</html>
+```
