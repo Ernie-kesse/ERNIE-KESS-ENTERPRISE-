@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order Online | ERNIE-KESS ENTERPRISE</title>
-  <meta name="description" content="Order airtime, data bundles, Mashup, bills and send money online at ERNIE-KESS ENTERPRISE in Ashaiman, Ghana.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -19,12 +18,12 @@
 
   <section>
 
-    <div class="notice">
+    <div class="notice" id="notice">
       <h3>Before you order</h3>
       <ul>
-        <li>Use the <strong>same name</strong> on this form as the name on your MoMo account that you will pay from.</li>
-        <li>Pay only to the number shown after you send your order.</li>
-        <li>After paying, reply <strong>paid</strong> on WhatsApp.</li>
+        <li>Use the <strong>same name</strong> on this form as the name on your MoMo account.</li>
+        <li><strong>Airtime and data:</strong> you pay securely on Paystack's page, and we deliver automatically once the payment is confirmed.</li>
+        <li><strong>Mashup, bills and send money:</strong> your order goes to us on WhatsApp.</li>
       </ul>
     </div>
 
@@ -66,9 +65,14 @@
       <p class="total">Charge: <span id="fee">GH₵ 0.00</span></p>
       <p class="total">Total to pay: <span id="total">GH₵ 0.00</span></p>
 
-      <button type="submit" class="btn">Send Order on WhatsApp</button>
+      <p class="flowNote" id="flowNote"></p>
+      <button type="submit" class="btn" id="submitBtn">Send Order on WhatsApp</button>
+
+      <p class="msg" id="formMsg"></p>
+      <button type="button" class="btn alt" id="waFallback" style="display:none;">Send this order on WhatsApp instead</button>
     </form>
 
+    <!-- Shown for WhatsApp orders (Mashup, bills, send money) -->
     <div id="payBox" class="payBox" style="display:none;">
       <h3>Order sent! Now pay:</h3>
       <p>Your order code: <strong id="orderRef"></strong></p>
@@ -76,6 +80,14 @@
       <p class="payNumber">0257285582 (<strong>Ernest Kesse</strong>)</p>
       <button type="button" id="copyBtn" class="btn copyBtn">Copy number</button>
       <p>After paying, reply <strong>paid</strong> on WhatsApp. We deliver once the money arrives.</p>
+    </div>
+
+    <!-- Shown when the customer comes back from Paystack -->
+    <div id="statusBox" class="payBox" style="display:none;">
+      <h3 id="statusTitle">Checking your payment...</h3>
+      <p id="statusText"></p>
+      <a class="btn alt" id="statusWa" href="#" target="_blank">Message us on WhatsApp</a>
+      <a class="btn" href="order.html">Make another order</a>
     </div>
 
     <p class="warn">Never send your MoMo PIN. We will never ask for it.</p>
