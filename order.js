@@ -4,7 +4,7 @@ const PAY_NUMBER = "0257285582";
 // Address of your API.
 // Use http://localhost:3000 while testing on your computer,
 // then change it to your hosted https address.
-const API_BASE = "https://ernie-kess-api.onrender.com";
+const API_BASE = "https://ernie-kess-data-api.onrender.com";
 
 // Percentage charges
 const RATES = {
