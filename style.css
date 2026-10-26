@@ -1,13 +1,15 @@
-/* ===== THEME COLOURS (from the logo) ===== */
+/* ===== THEME COLOURS ===== */
 :root {
-  --main: #1a6b3a;       /* dark green */
-  --main-dark: #124d2a;  /* darker green for text on gold */
-  --gold: #d4af37;       /* gold accent */
-  --light: #fbf4d9;      /* light gold tint */
-  --cream: #fafaf5;      /* page background */
-  --button: #1a6b3a;     /* main buttons */
+  --main: #0B3D2E;       /* dark green: header, headings, footer */
+  --main-dark: #082B20;  /* darker green: gradient end, text on gold */
+  --gold: #D4AF37;       /* gold accent */
+  --light: #F3F4F6;      /* light grey: tiles, notice boxes */
+  --cream: #F3F4F6;      /* page background */
+  --logo-bg: #FAFAF5;    /* matches the logo picture's own background */
+  --button: #15803D;     /* green buttons */
   --whatsapp: #25d366;   /* floating WhatsApp button */
   --alert: #e53935;      /* fraud warning stripe */
+  --text: #1F2937;       /* main text */
 }
 
 * {
@@ -19,7 +21,7 @@
 body {
   font-family: 'Poppins', Arial, sans-serif;
   background: var(--cream);
-  color: #222;
+  color: var(--text);
   line-height: 1.6;
 }
 
@@ -34,7 +36,7 @@ body::before {
   pointer-events: none;
 }
 
-/* ===== Header (green) ===== */
+/* ===== Header (dark green) ===== */
 header {
   background: linear-gradient(180deg, var(--main) 0%, var(--main-dark) 100%);
   color: white;
@@ -66,7 +68,7 @@ header p {
   height: auto;
   display: block;
   margin: 0 auto 10px;
-  background: var(--cream);
+  background: var(--logo-bg);
   padding: 12px;
   border-radius: 18px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
@@ -93,7 +95,7 @@ header p {
 
 /* ===== Sections (cards) ===== */
 section {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   max-width: 600px;
   width: calc(100% - 32px);
   margin: 18px auto;
@@ -132,7 +134,7 @@ h2::after {
   border-radius: 30px;
   font-weight: bold;
   margin-top: 12px;
-  box-shadow: 0 3px 8px rgba(26, 107, 58, 0.3);
+  box-shadow: 0 3px 8px rgba(21, 128, 61, 0.3);
 }
 
 .btn.alt {
@@ -200,6 +202,7 @@ header .btn {
 
 .steps {
   padding-left: 20px;
+  margin-bottom: 12px;
 }
 
 .steps li {
@@ -212,7 +215,7 @@ header .btn {
 
 .why li {
   padding: 10px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .why li:last-child {
@@ -230,7 +233,7 @@ header .btn {
 
 /* ===== FAQ ===== */
 details {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e5e7eb;
   padding: 10px 0;
 }
 
@@ -248,8 +251,8 @@ details p {
 form input:focus,
 form select:focus {
   outline: none;
-  border-color: var(--main);
-  box-shadow: 0 0 0 3px rgba(26, 107, 58, 0.15);
+  border-color: var(--button);
+  box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.15);
 }
 
 /* ===== Floating WhatsApp button and footer ===== */
@@ -272,13 +275,14 @@ footer {
   font-size: 0.9rem;
   color: var(--main);
 }
+
 /* ===== Splash screen (welcome) ===== */
 #splash {
   position: fixed;
   inset: 0;
   z-index: 100;
   background:
-    linear-gradient(rgba(18, 77, 42, 0.82), rgba(18, 77, 42, 0.82)),
+    linear-gradient(rgba(8, 43, 32, 0.85), rgba(8, 43, 32, 0.85)),
     url("building.jpg") center / cover no-repeat,
     var(--main-dark);
   color: white;
@@ -346,6 +350,7 @@ footer {
   animation: fill 4.4s linear forwards;
 }
 
+/* ===== Animations ===== */
 @keyframes appear {
   to { opacity: 1; }
 }
@@ -357,6 +362,7 @@ footer {
 @keyframes fill {
   to { width: 100%; }
 }
+
 @keyframes splashOut {
   to { opacity: 0; visibility: hidden; }
 }

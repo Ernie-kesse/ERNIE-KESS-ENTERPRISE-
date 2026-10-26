@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ERNIE-KESS ENTERPRISE | MoMo Services in Ashaiman</title>
-  <meta name="description" content="ERNIE-KESS ENTERPRISE offers MoMo cash in/out, airtime, data bundles, Mashup and bill payments in Ashaiman Main Station, Ghana. Open 24/7.">
+  <meta name="description" content="ERNIE-KESS ENTERPRISE offers MoMo cash in/out, send money, airtime, data bundles, Mashup, bill payments and bulk EVD for retail sellers in Ashaiman Main Station, Ghana. Open 24/7.">
   <meta name="theme-color" content="#1a6b3a">
   <link rel="icon" href="logo.jpg">
 
@@ -22,14 +22,16 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="splash">
-  <div class="welcomeText">
-    <span class="w1">Welcome to</span>
-    <span class="w2">ERNIE-KESS ENTERPRISE</span>
+
+  <div id="splash">
+    <div class="welcomeText">
+      <span class="w1">Welcome to</span>
+      <span class="w2">ERNIE-KESS ENTERPRISE</span>
+    </div>
+    <p class="tag">Fast. Safe. Reliable.</p>
+    <div class="loadBar"><span></span></div>
   </div>
-  <p class="tag">Fast. Safe. Reliable.</p>
-  <div class="loadBar"><span></span></div>
-</div>
+
   <header>
     <img src="logo.jpg" alt="ERNIE-KESS ENTERPRISE logo" class="logo">
     <h1 class="brandTitle">ERNIE-KESS ENTERPRISE</h1>
@@ -46,11 +48,11 @@
     <h2>Choose a Service</h2>
 
     <div class="tiles">
-      <a class="tile" href="https://wa.me/233257285582?text=I%20want%20to%20cash%20in%2Fout" target="_blank">
-        <span class="icon">💵</span>Cash In / Out
-      </a>
       <a class="tile" href="order.html?service=send">
         <span class="icon">📤</span>Send Money
+      </a>
+            <a class="tile" href="bulk.html">
+        <span class="icon">📦</span>Bulk EVD (Retailers)
       </a>
       <a class="tile" href="order.html?service=airtime">
         <span class="icon">📞</span>Airtime
@@ -72,11 +74,19 @@
 
   <section>
     <h2>How Online Orders Work</h2>
+
+    <p><strong>Airtime and data</strong></p>
     <ol class="steps">
-      <li>Fill the order form and send it on WhatsApp.</li>
+      <li>Choose your network and package, and enter the number to receive it.</li>
+      <li>Tap <strong>Pay Now</strong> and pay securely with MTN, Telecel or AT mobile money.</li>
+      <li>We deliver as soon as your payment is confirmed. The page tells you when it is done.</li>
+    </ol>
+
+    <p><strong>Mashup, bills and send money</strong></p>
+    <ol class="steps">
+      <li>Fill the order form and send it to us on WhatsApp.</li>
       <li>Pay the total by MoMo to the number we give you.</li>
-      <li>Reply <strong>paid</strong> on WhatsApp.</li>
-      <li>We deliver your airtime or data right away.</li>
+      <li>Reply <strong>paid</strong> on WhatsApp, and we deliver once the money arrives.</li>
     </ol>
   </section>
 
@@ -93,17 +103,17 @@
 
     <details>
       <summary>How do I order online?</summary>
-      <p>Tap Order Online, fill the form and send it on WhatsApp. We then give you a number to pay to.</p>
+      <p>Tap Order Online, choose your service and package, and fill in your details. For airtime and data you pay right on the page. For Mashup, bills and send money, the order goes to us on WhatsApp.</p>
     </details>
 
     <details>
       <summary>How do I pay?</summary>
-      <p>Send the total by MoMo to the number shown after you place your order. Then reply <strong>paid</strong> on WhatsApp.</p>
+      <p>For airtime and data, tap Pay Now and pay with MTN, Telecel or AT mobile money on the secure payment page. For other services, send the total by MoMo to the number we give you and reply <strong>paid</strong> on WhatsApp.</p>
     </details>
 
     <details>
       <summary>How long does delivery take?</summary>
-      <p>We deliver as soon as your payment arrives. If it takes longer than you expect, message us on WhatsApp with your order code.</p>
+      <p>We deliver as soon as your payment is confirmed. If it takes longer than you expect, message us on WhatsApp with your order number.</p>
     </details>
 
     <details>
@@ -138,20 +148,20 @@
   <a class="floatWa" href="https://wa.me/233257285582" target="_blank">WhatsApp</a>
 
   <script>
-  (function () {
-    var splash = document.getElementById("splash");
-    var seen = false;
+    (function () {
+      var splash = document.getElementById("splash");
 
-    function hideSplash() {
-      splash.classList.add("hide");
-    }
+      function hideSplash() {
+        splash.classList.add("hide");
+      }
 
-    // Tap to skip
-    splash.addEventListener("click", hideSplash);
+      // Tap to skip
+      splash.addEventListener("click", hideSplash);
 
-    // Hide automatically after 4.5 seconds
-    setTimeout(hideSplash, 4500);
-  })();
-</script>
+      // Hide automatically after 4.5 seconds
+      setTimeout(hideSplash, 4500);
+    })();
+  </script>
+
 </body>
 </html>

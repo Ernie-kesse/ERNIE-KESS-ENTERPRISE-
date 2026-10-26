@@ -111,3 +111,7 @@ input[readonly] {
 #statusBox .btn {
   margin-right: 6px;
 }
+.late {
+  color: #e53935;
+  font-weight: bold;
+}
