@@ -18,12 +18,15 @@
 
   <section>
 
+    <!-- Delivery hours (filled in by order.js) -->
+    <div id="hoursBanner" class="hours" style="display:none;"></div>
+
     <div class="notice" id="notice">
       <h3>Before you order</h3>
       <ul>
         <li>Use the <strong>same name</strong> on this form as the name on your MoMo account.</li>
-        <li><strong>Airtime and data:</strong> you pay securely on Paystack's page, and we deliver automatically once the payment is confirmed.</li>
-        <li><strong>Mashup, bills and send money:</strong> your order goes to us on WhatsApp.</li>
+        <li><strong>Airtime, data, Mashup and bills:</strong> you pay securely on Paystack's page, and we deliver as soon as the payment is confirmed.</li>
+        <li><strong>Send money:</strong> your order goes to us on WhatsApp. Check the number and name carefully, because we cannot undo a transfer.</li>
       </ul>
     </div>
 
@@ -49,6 +52,17 @@
         <option value="AT">AT</option>
       </select>
 
+      <!-- Data only: Instant or Standard -->
+      <div id="speedBox" style="display:none;">
+        <label>How fast do you need it?</label>
+        <select id="speedChoice">
+          <option value="instant">Instant</option>
+          <option value="standard">Standard (30 minutes to 3 hours)</option>
+        </select>
+        <p class="hint" id="speedNote"></p>
+      </div>
+
+      <!-- Data only: the package list -->
       <div id="bundleBox" style="display:none;">
         <label>Package</label>
         <select id="bundle">
@@ -57,7 +71,37 @@
       </div>
 
       <label>Number to receive / account number</label>
-      <input type="tel" id="recipient" required>
+      <input type="text" id="recipient" inputmode="tel" required>
+
+      <!-- Bills only -->
+      <div id="billBox" style="display:none;">
+        <p class="hint" id="billHint"></p>
+
+        <label>Name on the account (as it appears on the bill)</label>
+        <input type="text" id="billName">
+
+        <label>Your phone number (we send your receipt or token here)</label>
+        <input type="text" id="billContact" inputmode="tel">
+      </div>
+
+      <!-- Send money only -->
+      <div id="sendBox" style="display:none;">
+        <label>Who are you sending to?</label>
+        <select id="recipientType">
+          <option value="">Choose</option>
+          <option value="subscriber">Normal subscriber (no charge)</option>
+          <option value="agent">Agent number (0.5% charge)</option>
+          <option value="merchant">Merchant number (1% charge)</option>
+        </select>
+
+        <label>Recipient's name (as it appears on the MoMo account)</label>
+        <input type="text" id="recipientName">
+
+        <label>
+          <input type="checkbox" id="numberChecked" style="width:auto; margin-right:8px;">
+          I have checked that the number and name are correct
+        </label>
+      </div>
 
       <label>Amount (GH₵)</label>
       <input type="number" id="amount" min="1" step="0.5" required>
@@ -72,7 +116,7 @@
       <button type="button" class="btn alt" id="waFallback" style="display:none;">Send this order on WhatsApp instead</button>
     </form>
 
-    <!-- Shown for WhatsApp orders (Mashup, bills, send money) -->
+    <!-- Shown after a WhatsApp order (send money, and the backup for the rest) -->
     <div id="payBox" class="payBox" style="display:none;">
       <h3>Order sent! Now pay:</h3>
       <p>Your order code: <strong id="orderRef"></strong></p>
